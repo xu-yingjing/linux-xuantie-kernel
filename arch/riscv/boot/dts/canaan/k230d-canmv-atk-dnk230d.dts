@@ -1,0 +1,58 @@
+// SPDX-License-Identifier: GPL-2.0 OR MIT
+/*
+ * Copyright (C) 2024 Yangyu Chen <cyy@cyyself.name>
+ */
+
+#include "k230.dtsi"
+
+/ {
+	model = "Alientek DNK230D";
+	compatible = "canaan,canmv-k230", "canaan,kendryte-k230";
+
+	aliases {
+		serial4 = &uart4;
+	};
+
+	chosen {
+		stdout-path = "serial0:115200n8";
+	};
+
+	ddr: memory@0 {
+		device_type = "memory";
+		reg = <0x0 0x0 0x0 0x8000000>;
+	};
+
+	sound {
+		status                      = "okay";
+		compatible                  = "canaan,k230-audio-inno";
+		canaan,model                = "K230_I2S_INNO";
+		canaan,k230-i2s-controller  = <&i2s>;
+		canaan,k230-audio-codec     = <&inno_codec>;
+	};
+};
+
+&uart0 {
+	status = "okay";
+};
+
+&uart4 {
+	status = "okay";
+};
+
+&mmc_sd0 {
+	status = "okay";
+	non-removable;
+	cap-sd-highspeed;
+	no-1-8-v;
+};
+
+&mmc_sd1 {
+	status = "okay";
+	cd-gpios = <&gpio0_ports 2 GPIO_ACTIVE_LOW>;
+	cap-sd-highspeed;
+	no-1-8-v;
+};
+
+&usb0 {
+	status = "okay";
+};
